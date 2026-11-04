@@ -502,8 +502,8 @@
         function spawnShockwave(stageX, stageY) {
             const ring = document.createElement('div');
             ring.className = 'shockwave-ring';
-            ring.style.left = `${stageX}px`;
-            ring.style.top = `${stageY}px`;
+            ring.style.left = `${(stageX / 560) * 100}%`;
+            ring.style.top = `${(stageY / 560) * 100}%`;
             ring.style.width = '70px';
             ring.style.height = '70px';
             shockwaveContainer.appendChild(ring);
