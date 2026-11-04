@@ -1,0 +1,12 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.git
+.gitignore
+.env
+app/converted_output/*
+!app/converted_output/.gitkeep
+test_*.py
+test_*.*
+*.log

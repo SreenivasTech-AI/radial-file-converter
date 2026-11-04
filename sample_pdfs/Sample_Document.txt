@@ -1,0 +1,11 @@
+UNIVERSAL RADIAL CONVERTER
+============================
+
+This is a clean plaintext document.
+It can be converted directly into:
+1. PDF Document (.pdf)
+2. Microsoft Word Document (.docx)
+3. High-Resolution PNG Image (.png)
+4. Crisp JPG Image (.jpg)
+
+Everything runs locally on your machine with zero cloud uploads!

@@ -1,0 +1,43 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // users/{userId} collection
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId)
+                    && request.resource.data.uid == userId
+                    && request.resource.data.name is string
+                    && request.resource.data.name.size() >= 1
+                    && request.resource.data.name.size() <= 100
+                    && request.resource.data.email is string
+                    && request.resource.data.email.matches('.*@.*')
+                    && request.resource.data.convertedFilesCount is number
+                    && request.resource.data.convertedFilesCount >= 0;
+      allow update: if isOwner(userId)
+                    && request.resource.data.uid == resource.data.uid;
+      allow delete: if isOwner(userId);
+
+      // users/{userId}/conversions subcollection
+      match /conversions/{conversionId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId)
+                      && request.resource.data.filename is string
+                      && request.resource.data.targetFormat is string;
+        allow update, delete: if false;
+      }
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
