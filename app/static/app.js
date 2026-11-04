@@ -459,14 +459,23 @@
         let particles = [];
         let confettiParticles = [];
 
+        let lastCanvasW = 0;
+        let lastCanvasH = 0;
         function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            // Prevent mobile address bar oscillation from constantly resizing canvas
+            if (lastCanvasW && Math.abs(w - lastCanvasW) < 15 && Math.abs(h - lastCanvasH) < 80) return;
+            lastCanvasW = w;
+            lastCanvasH = h;
+            canvas.width = w;
+            canvas.height = h;
         }
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        for (let i = 0; i < 50; i++) {
+        const particleCount = window.innerWidth < 640 ? 12 : 50;
+        for (let i = 0; i < particleCount; i++) {
             particles.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
